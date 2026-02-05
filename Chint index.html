@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Love Quiz 💖</title>
+<style>
+body{
+  margin:0;
+  padding:20px;
+  font-family:"Arial Rounded MT Bold","Comic Sans MS",sans-serif;
+  background:linear-gradient(135deg,#ffd6e8,#fff);
+  text-align:center;
+  min-height:100vh;
+  overflow:auto;
+  position:relative;
+}
+.screen{
+  display:none;
+  min-height:100vh;
+  padding-bottom:50px;
+  position:relative;
+  z-index:1500;
+}
+.screen.active{display:block;}
+h1,p,button{color:black;position:relative;}
+button{
+  padding:10px 18px;
+  border:none;
+  border-radius:30px;
+  background:#ff5fa2;
+  color:white;
+  font-size:16px;
+  margin:12px auto;
+  cursor:pointer;
+  position:relative;
+  z-index:2000;
+  pointer-events:auto;
+}
+button:hover{transform:scale(1.05);}
+button:active{transform:scale(0.95);}
+.feedback{
+  position:absolute;
+  z-index:3000;
+  background:#fff;
+  padding:10px 14px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.3);
+  max-width:260px;
+  font-size:16px;
+}
+#progressWrap{
+  width:90%;
+  max-width:400px;
+  height:18px;
+  background:#ffe6f0;
+  border-radius:10px;
+  margin:15px auto;
+  overflow:hidden;
+  z-index:50;
+  position:relative;
+}
+#progress{height:100%; width:0%; background:#ff5fa2; transition:width 0.5s ease;}
+#yesWaiting{
+  display:none;
+  background:#ff77b5;
+  color:white;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:14px;
+  position:fixed;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:500;
+  pointer-events:none;
+  animation:pop 0.8s ease forwards;
+}
+.floating-emoji{
+  position:absolute;
+  font-size:28px;
+  pointer-events:none;
+  z-index:1000;
+  animation:floatUp 6s linear forwards;
+}
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-120vh);opacity:0;}
+}
+@keyframes pop{
+  0%{transform:translateX(-50%) scale(1);}
+  50%{transform:translateX(-50%) scale(1.3);}
+  100%{transform:translateX(-50%) scale(1);}
+}
+</style>
+</head>
+<body>
+
+<div id="progressWrap"><div id="progress"></div></div>
+
+<!-- Page 0: Welcome -->
+<div class="screen active" id="s0">
+  <h1>🌸 Welcome to Our Love Quiz 💕 🌸</h1>
+  <p>Only true love passes this 😌💖</p>
+  <p>💫 Are you ready to test your heart? 💫</p>
+  <button onclick="next()">Start 💖</button>
+</div>
+
+<!-- Page 1-3: Quiz -->
+<div class="screen" id="s1">
+  <h1>Where did we fall for each other?</h1>
+  <button onclick="wrongQ1(this)">8th July</button>
+  <button onclick="wrongQ1(this)">8th June</button>
+  <button onclick="wrongQ1(this)">7th July</button>
+  <button onclick="right(this,1)">20th July</button>
+</div>
+
+<div class="screen" id="s2">
+  <h1>What was the first gift you gave me?</h1>
+  <button onclick="wrongQ2(this)">Bouquet</button>
+  <button onclick="rightQ2(this)">Teddy Bear</button>
+  <button onclick="wrongQ2(this)">Apple Watch</button>
+  <button onclick="wrongQ2(this)">Ring</button>
+</div>
+
+<div class="screen" id="s3">
+  <h1>What did we talk about for hours?</h1>
+  <button onclick="wrongQ3(this)">Family</button>
+  <button onclick="wrongQ3(this)">Future plans</button>
+  <button onclick="right(this,3)">Random late-night talks</button>
+  <button onclick="wrongQ3(this)">Work & life</button>
+</div>
+
+<!-- Page 4: Valentine Yes/No -->
+<div class="screen" id="s4">
+  <h1>Will you be my Valentine? 💘</h1>
+  <div style="display:inline-flex; justify-content:center; align-items:center; width:100%; height:200px; position:relative;">
+    <button id="yesBtn">Yes 💖</button>
+    <div style="width:10px;"></div>
+    <button id="noBtn">No</button>
+  </div>
+  <div id="yesWaiting">Yes is waiting 💖 Press Yes to move forward</div>
+</div>
+
+<!-- Page 5: Half love letter -->
+<div class="screen" id="s5">
+  <h1>💌 TO MY LOVE ❤️</h1>
+  <div>
+    <p>“Never Forget That I Love You 🥰<br>
+       Sometimes It's Hard to Find Words 💭…”</p>
+    <p>Do you want to read it completely? 🥰💖</p>
+    <button onclick="next()">Yes 💖</button>
+  </div>
+</div>
+
+<!-- Page 6: Second half letter -->
+<div class="screen" id="s6">
+  <h1 style="margin-top:50px;">I LOVE YOU CHINTU ❤️💖💫</h1>
+  <p>To Tell You How Much You Mean To Me 💖</p>
+  <p>If I Did Anything Right in My Life 🌟</p>
+  <p>It Was When I Gave My Heart To You 💘</p>
+  <p>You Are My Best Friend 🐾</p>
+  <p>My Soulmate 💑</p>
+  <p>My Everything 💎✨</p>
+  <p>Forever and always 🥰💞</p>
+  <button onclick="next()" style="margin-top:20px;">Next 💖</button>
+</div>
+
+<!-- Page 7: Do you think it's the end? -->
+<div class="screen" id="s7">
+  <h1>Do you think it’s the end? 😏💖</h1>
+  <p>But love has many surprises…💌✨ And our story is just beginning! 🥰💞</p>
+  <button onclick="next()" style="margin-top:20px;">See what’s next 💖</button>
+</div>
+
+<!-- Page 8: Final ending -->
+<div class="screen" id="s8">
+  <h1>Sorry, it’s the end… 😅💖</h1>
+  <p>But not of our love story ❤️✨ We’ll keep making memories together! 🥰💞</p>
+  <button onclick="restartQuiz()" style="margin-top:20px;">Play Again 💖</button>
+</div>
+
+<script>
+let step=0,total=8,noClicks=0,q1Wrong=0,q2Wrong=0,q3Wrong=0;
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const yesWait=document.getElementById("yesWaiting");
+
+function updateProgress(){
+  document.getElementById("progress").style.width=((step)/(total-1))*100+"%";
+}
+
+function next(){
+  document.querySelector(".active").classList.remove("active");
+  step++;
+  if(step>total) step=total;
+  document.getElementById("s"+step).classList.add("active");
+  updateProgress();
+}
+
+function showFeedback(btn,msg,fontSize="16px",padding="10px 14px"){
+  const f=document.createElement("div");
+  f.className="feedback";
+  f.innerHTML=msg;
+  f.style.fontSize = fontSize;
+  f.style.padding = padding;
+  document.body.appendChild(f);
+
+  let left=window.innerWidth/2-120;
+  let top=100;
+
+  if(btn){
+    const r=btn.getBoundingClientRect();
+    left=r.left;
+    top=r.top-60+window.scrollY;
+    if(top<20) top=20;
+    if(left<10) left=10;
+    if(left>window.innerWidth-260) left=window.innerWidth-260;
+  }
+
+  f.style.left=left+"px";
+  f.style.top=top+"px";
+
+  setTimeout(()=>f.remove(),1500);
+}
+
+function floatEmojis(list){
+  for(let i=0;i<6;i++){
+    const e=document.createElement("div");
+    e.className="floating-emoji";
+    e.innerText=list[Math.floor(Math.random()*list.length)];
+    e.style.left=Math.random()*90+"vw";
+    e.style.top=Math.random()*90+"vh";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),6000);
+  }
+}
+
+/* Quiz wrong/right */
+function wrongQ1(btn){const caps=["🙂‍↔️💔 My heart is broken chint","🐾💖 But I’ll try again… stay with me!","😢 Oops! Not quite… keep going!"];showFeedback(btn,caps[q1Wrong%3]);floatEmojis(["🥺","😏","😡"]);q1Wrong++}
+function wrongQ2(btn){const caps=["🤨 Really chint? Think again…","😩 Oh my god… you’re kidding me, right? 🙄","😢 Not quite… try again!"];showFeedback(btn,caps[q2Wrong%3]);floatEmojis(["😣","🤫","🫨","🙄"]);q2Wrong++}
+function wrongQ3(btn){const caps=["😿 Almost… try again!","😩 Nope, try one more time!","🙄 Not quite…"];showFeedback(btn,caps[q3Wrong%3]);floatEmojis(["😩","😤","🤬","😑"]);q3Wrong++}
+function right(btn,q){const msg=q===1?"💖 Correct! You remembered our special day!":"🌙 Perfect! Our late-night talks forever 💌";showFeedback(btn,msg);floatEmojis(["🥳","🌹"]);setTimeout(next,1500)}
+function rightQ2(btn){showFeedback(btn,"🎁 Perfect! You know the first gift I loved 🐻");floatEmojis(["🥳","🌹"]);setTimeout(next,1500)}
+
+/* No button logic */
+noBtn.onclick = () => {
+  noClicks++;
+  const containerHeight = window.innerHeight;
+  const containerWidth = window.innerWidth;
+
+  if(noClicks <= 2){
+    noBtn.style.position = "relative";
+    yesBtn.style.position = "relative";
+    yesBtn.style.transform = "none";
+    if(noClicks === 1) showFeedback(noBtn,"🚫 Invalid answer 😌");
+    else showFeedback(noBtn,"😤 You are testing my patience!");
+  } else if(noClicks === 3){
+    noBtn.style.position="absolute";
+    noBtn.style.top="50px";
+    noBtn.style.left="50px";
+    yesBtn.style.position="absolute";
+    yesBtn.style.top="35%";
+    yesBtn.style.left="50%";
+    yesBtn.style.transform="translate(-50%, -50%)";
+  } else if(noClicks === 4){
+    noBtn.style.top="50px";
+    noBtn.style.left=(containerWidth - noBtn.offsetWidth - 50) + "px";
+  } else if(noClicks === 5){
+    noBtn.style.top=(containerHeight - noBtn.offsetHeight - 150) + "px";
+    noBtn.style.left=(containerWidth - noBtn.offsetWidth - 50) + "px";
+  } else {
+    noBtn.style.display="none";
+    showFeedback(null,"❌ No is not an option, bye! 😆","24px","20px 25px");
+    yesWait.style.display="block"; 
+    yesWait.style.pointerEvents="auto";
+  }
+};
+
+/* Yes button */
+yesBtn.onclick = () => {
+  showFeedback(yesBtn,"Yayy! 🥳💖 You made me so happy 💘💞💓");
+  const emojis=["🩷","❤️","🩵","💚","🧡","🖤","🩶","🤍","💛","🤎","💜","❣️","💗","💓","💝","💞","💘","💕","💖"];
+  for(let i=0;i<30;i++){
+    const e=document.createElement("div");
+    e.className="floating-emoji";
+    e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.left=Math.random()*90+"vw";
+    e.style.top=Math.random()*90+"vh";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),7000);
+  }
+  setTimeout(next,1500);
+};
+
+/* Restart */
+function restartQuiz(){
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  step = 0;
+  updateProgress();
+  document.getElementById("s0").classList.add("active");
+
+  noClicks = 0;
+  noBtn.style.display = "inline-block";
+  noBtn.style.position = "relative";
+  noBtn.style.top = "0";
+  noBtn.style.left = "0";
+  noBtn.style.transform = "none";
+
+  yesBtn.style.position = "relative";
+  yesBtn.style.top = "0";
+  yesBtn.style.left = "0";
+  yesBtn.style.transform = "none";
+
+  yesWait.style.display = "none";
+
+  q1Wrong = 0;
+  q2Wrong = 0;
+  q3Wrong = 0;
+
+  document.querySelectorAll(".floating-emoji").forEach(e => e.remove());
+}
+
+updateProgress();
+</script>
+</body>
+</html>
